@@ -97,7 +97,7 @@ Asi queda en mi repo personal en Docker
 # Como correr un contenedor de nginx
 docker run --detach --name server nginx
 
--d o --detach —> Si el contenedor que voy a ejecutar tiene un proceso que tiene output y/o pretende correr en modo interactivo, lo va omitir, me va dar el control de la terminal.
+**-d o --detach**—> Si el contenedor que voy a ejecutar tiene un proceso que tiene output y/o pretende correr en modo interactivo, lo va omitir, me va dar el control de la terminal.
 
 Después de ejecutar el proceso, el ultimo número largo que aparece en la terminal esta en formato SHA, lo usa docker para generar los números de IDs únicos.
 
@@ -109,7 +109,7 @@ Los contenedores también están aislados a nivel de red. El que un contenedor t
 
 docker run -d --name server -p 8080:80 nginx
 
--p —> esta bandera es para atar los puertos. Primero el de mi maquina y después el del contenedor.
+**-p** —> esta bandera es para atar los puertos. Primero el de mi maquina y después el del contenedor. El mapeo es el puerto de mi maquina apuntara al del docker. Para hacerlo inverso, el puerto del docker apunte al puerto del host se pone `udp` o se usa un shortcut `docker.for.mac.localhost`
 
 Ahora en PORTS aparece que puerto de mi maquina está dirigiendo hacia el puerto del contenedor.
 
