@@ -3,19 +3,24 @@ Docker Summary Platzi
 
 # Docker
 - El PID 1 es el root process y cuando se apaga un contenedor al terminar ese proceso
+- Flujo de docker es: DockerFile -> Build -> Image -> Run -> Container
 
 # Comandos
-docker ps = lista los contenedores
-docker ps -a = lista contenedores a detalles
-docker ps -aq = lista solo los ID de los contenedores (la q significa quiet, tranquilo o silencioso)
-docker inspect id_contenedor = detalles internos del contenedor
-docker inspect nombre_contenedor = lo mismo que el anterior
-docker inspect -f {{}} nombre_contenedor = filtra una variable especifico del contenedor
-docker rm nombre_contenedor = elimina un contenedor
-docker rm $(ps -aq) = borra TODOS los contenedores
-docker exec it nombre_contenedor bash
-docker kill nombre_contenedor = mata el proceso completo
-docker rm -f nombre_contenedor = forzar la eliminación del contenedor
+- docker ps = lista los contenedores
+- docker ps -a = lista contenedores a detalles
+- docker ps -aq = lista solo los ID de los contenedores (la q significa quiet, tranquilo o silencioso)
+- docker inspect id_contenedor = detalles internos del contenedor
+- docker inspect nombre_contenedor = lo mismo que el anterior
+- docker inspect -f {{}} nombre_contenedor = filtra una variable especifico del contenedor
+- docker rm nombre_contenedor = elimina un contenedor
+- docker rm $(ps -aq) = borra TODOS los contenedores
+- docker exec it nombre_contenedor bash
+- docker kill nombre_contenedor = mata el proceso completo
+- docker rm -f nombre_contenedor = forzar la eliminación del contenedor
+- **docker volume prune = Limpia volumenes q ya no estan usando los contenedores**
+- docker image ls
+- docker pull {nombre de la imagen}
+- 
 
 ### **Modo interactivo**
 
@@ -53,10 +58,41 @@ docker run -d --name {nombre del contenedor} —mount src={nombre del volumen},d
 Ej:docker volume create dbdata
 Ej:docker run -d --name mongo-db --mount src=dbdata,dst=/data/db mongo
 
+Se puede seleccionar un volumen por fuera de la maquina, selecccionando un driver (S3, etc)
+
+https://docs.docker.com/storage/
+
 ### tmpfs mount
 Montar data en memoria del docker (RAM)
 
 ![image](images/docker-data-persist.PNG)
+
+# Imagenes
+Las imágenes son un componente fundamental de Docker y sin ellas los contenedores no tendrían sentido. Estas imágenes son fundamentalmente plantillas o templates.
+Algo que debemos tener en cuenta es que las imágenes no van a cambiar, es decir, una vez este realizada no la podremos cambiar.
+
+Conjunto de Layers, capa base y capaz encima de esa capa.
+Cada capa es inmutable.
+Similar a git.
+
+Docker Hub - Repositorios
+
+## **Imagenes Propias (DockerFile)**
+Siempre tiene q comenzar con un FROM imagen_base
+```bash
+FROM ubuntu 
+RUN touch /user/bin/hola-mundo
+```
+
+Luego se le da
+
+docker build -t ubuntu:platzi {contexto de build. Contenido en el directorio. Q puede usar}
+
+### Subirlas al repo personal
+- docker tag ubuntu:platzi {camilo repo}/ubuntu:platzi
+- docker push {camilo repo}/ubuntu:platzi
+
+Asi queda en mi repo personal en Docker
 
 # Como correr un contenedor de nginx
 docker run --detach --name server nginx
